@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ company }} — Admin</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="admin-body">
+<div class="container">
+<div class="header admin-header">
+<div class="brand">{{ company }} Admin</div>
+<h1>🔧 Control Panel</h1>
+</div>
+
+<div id="loginBox" class="card">
+<h3>🔐 Enter Admin Password</h3>
+<input type="password" id="passwordInput" placeholder="Password">
+<button id="loginBtn">Login</button>
+</div>
+
+<div id="adminBox" style="display:none">
+
+<div class="card payment">
+<h3>💳 Payment Settings</h3>
+<p class="pay-hint">Shown to customers when they tap "Pay Now". Editable anytime.</p>
+<div class="form-grid">
+<input id="p_name" placeholder="Account Name">
+<input id="p_bank" placeholder="Bank Name">
+</div>
+<div class="form-grid">
+<input id="p_account" placeholder="Account Number">
+<input id="p_other" placeholder="Other (Opay, PayPal, etc.)">
+</div>
+<input id="p_note" placeholder="Note for customers (e.g. Send screenshot after payment)">
+<button id="savePaymentBtn" class="green">💾 Save Payment Settings</button>
+</div>
+
+<div class="card">
+<div id="editBanner" class="edit-banner">✏️ Editing: <span id="editingCode"></span></div>
+<h3 id="formTitle">➕ Add / Update Shipment</h3>
+
+<div class="section-label">Tracking Info</div>
+<div class="form-grid">
+<input id="f_code" placeholder="Tracking Code">
+<input id="f_status" placeholder="Status (e.g. In Transit)">
+</div>
+
+<div class="section-label">Route</div>
+<div class="form-grid">
+<input id="f_origin" placeholder="Origin">
+<input id="f_destination" placeholder="Destination">
+</div>
+
+<div class="section-label">Recipient</div>
+<div class="form-grid">
+<input id="f_recipient" placeholder="Recipient Name">
+<input id="f_phone" placeholder="Phone">
+</div>
+<input id="f_email" placeholder="Email">
+
+<div class="section-label">Package Details</div>
+<div class="form-grid">
+<input id="f_item" placeholder="Item">
+<input id="f_weight" placeholder="Weight">
+</div>
+<input id="f_pieces" placeholder="Number of Pieces">
+
+<div class="section-label">📸 Package Photos (image URLs, one per line)</div>
+<textarea id="f_images" rows="4" placeholder="https://i.imgur.com/abc.jpg"></textarea>
+
+<div class="section-label">📝 Big Note (shown large on customer page)</div>
+<textarea id="f_note_big" rows="5" placeholder="Important info — pickup, customs, delivery window, etc."></textarea>
+
+<div class="section-label">Short Note (history entry only)</div>
+<input id="f_note" placeholder="e.g. Customs clearance in progress">
+
+<button id="saveBtn">💾 Save Shipment</button>
+<button id="cancelBtn" class="btn-cancel" style="display:none">✖️ Cancel Edit</button>
+</div>
+
+<div class="card">
+<h3>📋 All Shipments</h3>
+<div id="shipmentList">Loading...</div>
+</div>
+</div>
+</div>
+
+<script src="/static/admin.js"></script>
+</body>
+</html>
