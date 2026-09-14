@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ company }} — Track Shipment</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="container">
+<div class="header">
+<div class="brand">{{ company }}</div>
+<h1>📦 Track Your Shipment</h1>
+<p>{{ tagline }}</p>
+</div>
+<div class="search-box">
+<input type="text" id="codeInput" placeholder="Enter tracking code" autocomplete="off">
+<button id="trackBtn">Track</button>
+</div>
+<div id="result"></div>
+</div>
+
+<div class="lightbox" id="lightbox" onclick="this.style.display='none'">
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<div class="modal" id="payModal" onclick="if(event.target===this)this.classList.remove('show')">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="document.getElementById('payModal').classList.remove('show')">✕</button>
+    <h3>💳 Payment Details</h3>
+    <p class="modal-sub">Send payment to any account below</p>
+    <div id="payDetails">Loading...</div>
+    <div class="pay-note" id="payNote" style="display:none"></div>
+  </div>
+</div>
+
+<script src="/static/script.js"></script>
+</body>
+</html>
