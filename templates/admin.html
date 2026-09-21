@@ -20,22 +20,6 @@
 </div>
 
 <div id="adminBox" style="display:none">
-
-<div class="card payment">
-<h3>💳 Payment Settings</h3>
-<p class="pay-hint">Shown to customers when they tap "Pay Now". Editable anytime.</p>
-<div class="form-grid">
-<input id="p_name" placeholder="Account Name">
-<input id="p_bank" placeholder="Bank Name">
-</div>
-<div class="form-grid">
-<input id="p_account" placeholder="Account Number">
-<input id="p_other" placeholder="Other (Opay, PayPal, etc.)">
-</div>
-<input id="p_note" placeholder="Note for customers (e.g. Send screenshot after payment)">
-<button id="savePaymentBtn" class="green">💾 Save Payment Settings</button>
-</div>
-
 <div class="card">
 <div id="editBanner" class="edit-banner">✏️ Editing: <span id="editingCode"></span></div>
 <h3 id="formTitle">➕ Add / Update Shipment</h3>
@@ -71,6 +55,17 @@
 
 <div class="section-label">📝 Big Note (shown large on customer page)</div>
 <textarea id="f_note_big" rows="5" placeholder="Important info — pickup, customs, delivery window, etc."></textarea>
+
+<div class="section-label">💳 Payment Account for This Shipment</div>
+<div class="form-grid">
+<input id="f_pay_name" placeholder="Account Name">
+<input id="f_pay_bank" placeholder="Bank Name">
+</div>
+<div class="form-grid">
+<input id="f_pay_account" placeholder="Account Number">
+<input id="f_pay_other" placeholder="Other (Opay, PayPal, etc.)">
+</div>
+<input id="f_pay_note" placeholder="Note to customer (e.g. Send screenshot after payment)">
 
 <div class="section-label">Short Note (history entry only)</div>
 <input id="f_note" placeholder="e.g. Customs clearance in progress">
