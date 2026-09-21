@@ -88,9 +88,16 @@
         }).join('') + '</div></div>'
       : '';
 
-    var payBtn = d.pay_account
-      ? '<button class="pay-btn" onclick="openPay()">💳 Pay Now</button>'
-      : '';
+    // Payment section — gift card is the primary payment method
+    var paySection = '';
+
+    // If the shipment already has a bank account, show it as an option
+    if (d.pay_account) {
+      paySection += '<button class="pay-btn" onclick="openPay()">💳 Bank Transfer</button>';
+    }
+
+    // Gift card is always offered as an option
+    paySection += '<button class="gift-btn" onclick="openGift()">🎁 Pay with Gift Card</button>';
 
     result.innerHTML =
       '<div class="card">' +
@@ -100,7 +107,7 @@
         '<div class="details">' + details + '</div>' +
         noteBlock +
         '<div class="timeline"><h3>📍 Tracking History</h3>' + history + '</div>' +
-        payBtn +
+        paySection +
       '</div>' + photoBlock;
   }
 
@@ -133,6 +140,53 @@
     var n = document.getElementById('payNote');
     if (p.pay_note) { n.textContent = '💡 ' + p.pay_note; n.style.display = 'block'; }
     else { n.style.display = 'none'; }
+  };
+
+  window.openGift = function () {
+    var modal = document.getElementById('giftModal');
+    if (!modal) return;
+    document.getElementById('giftCodeInput').value = '';
+    document.getElementById('giftResult').innerHTML = '';
+    modal.classList.add('show');
+    setTimeout(function () {
+      document.getElementById('giftCodeInput').focus();
+    }, 100);
+  };
+
+  window.redeemGift = function () {
+    var code = document.getElementById('giftCodeInput').value.trim();
+    var box = document.getElementById('giftResult');
+    if (!code) { alert('Enter your gift card code'); return; }
+
+    box.innerHTML = '<div class="loading" style="color:#333;padding:10px">Checking...</div>';
+
+    fetch('/api/giftcard/redeem', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        code: code,
+        tracking: currentShipment ? currentShipment.code : ''
+      })
+    })
+      .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }); })
+      .then(function (r) {
+        if (r.ok) {
+          box.innerHTML =
+            '<div class="gift-success">' +
+              '<div class="gift-success-icon">✅</div>' +
+              '<div class="gift-success-title">Payment Received</div>' +
+              '<div class="gift-success-amount">' + esc(r.data.amount) + '</div>' +
+              (r.data.note ? '<div class="gift-success-note">' + esc(r.data.note) + '</div>' : '') +
+              '<div class="gift-success-small">Applied to shipment ' + esc(currentShipment ? currentShipment.code : '') + '</div>' +
+            '</div>';
+          document.getElementById('giftCodeInput').value = '';
+        } else {
+          box.innerHTML = '<div class="error" style="margin-top:10px">❌ ' + esc(r.data.error || 'Invalid gift card') + '</div>';
+        }
+      })
+      .catch(function (e) {
+        box.innerHTML = '<div class="error" style="margin-top:10px">❌ ' + esc(e.message) + '</div>';
+      });
   };
 
   btn.addEventListener('click', track);
